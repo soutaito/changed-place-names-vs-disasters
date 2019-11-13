@@ -3,6 +3,9 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import disasters from './disasters'
 import places from './places'
 import landsideIcon from './images/landslide.jpg'
+import redIcon from '././images/red.png'
+import yellowIcon from './images/yellow.png'
+import blueIcon from './images/blue.png'
 
 const center = { lat: 35.3423, lng: 139.6197 }
 const range = 0.1
@@ -47,7 +50,8 @@ class App extends React.Component {
     const yokohamaPlaces = places.filter(v => {
       const lat = Number(v[2])
       const lng = Number(v[3])
-      return Number(v[4]) === 0 && (center.lat - range) <= lat && lat <= (center.lat + range) && (center.lng - range) <= lng && lng <= (center.lng + range)
+      return /*Number(v[4]) === 0 && */(center.lat - range) <= lat && lat <= (center.lat + range) && (center.lng - range) <= lng && lng <= (center.lng + range)
+    
     })
     console.log(yokohamaPlaces)
 
@@ -85,11 +89,21 @@ class App extends React.Component {
 
       >
         {this.state.places.map((v, i) => {
+          let icon = redIcon
+
+          if(Number(v[4])=== 1){
+            icon = blueIcon
+
+          }else if(Number(v[4])=== 2){
+            icon = yellowIcon
+          }
+
           return <Marker
             key={i}
             name={v[1] + '→' + v[7]}
             onClick={this.onMarkerClick}
             position={{ lat: Number(v[2]), lng: Number(v[3]) }}
+            icon={icon}
           />
         })}
         {this.state.disasters.map((v, i) => {

@@ -47,7 +47,7 @@ class App extends React.Component {
     const yokohamaPlaces = places.filter(v => {
       const lat = Number(v[2])
       const lng = Number(v[3])
-      return Number(v[4]) > 0 && (center.lat - range) <= lat && lat <= (center.lat + range) && (center.lng - range) <= lng && lng <= (center.lng + range)
+      return Number(v[4]) === 0 && (center.lat - range) <= lat && lat <= (center.lat + range) && (center.lng - range) <= lng && lng <= (center.lng + range)
     })
     console.log(yokohamaPlaces)
 
@@ -98,7 +98,7 @@ class App extends React.Component {
             name={v.name}
             onClick={this.onMarkerClick}
             position={{ lat: v.lat, lng: v.lng }}
-            icon={landsideIcon}
+            icon={v.icon}
           />
         })}
         <InfoWindow
